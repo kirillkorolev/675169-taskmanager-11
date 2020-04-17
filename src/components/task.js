@@ -23,7 +23,7 @@ export const createTaskTemplate = (task) => {
                   <button type="button" class="card__btn card__btn--edit">
                     edit
                   </button>
-                  <button type="button" class="card__btn ${archiveButtonInactiveClass}">
+                  <button type="button" class="card__btn card__btn--archive ${archiveButtonInactiveClass}">
                     archive
                   </button>
                   <button

@@ -22,6 +22,6 @@ export default class Board {
   }
 
   removeElement() {
-    this._element = 0;
+    this._element = null;
   }
 }
