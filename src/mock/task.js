@@ -1,4 +1,5 @@
 import {COLORS} from "../const.js";
+import {getRandomArrayItem, getRandomIntegerNumber} from "../utils.js";
 
 const DescriptionItems = [
   `Изучить теорию`,
@@ -14,16 +15,6 @@ const DefaultRepeatingDays = {
   "fr": false,
   "sa": false,
   "su": false,
-};
-
-const getRandomArrayItem = (array) => {
-  const randomIndex = getRandomIntegerNumber(0, array.length);
-
-  return array[randomIndex];
-};
-
-const getRandomIntegerNumber = (min, max) => {
-  return min + Math.floor(Math.random() * (max - min));
 };
 
 const getRandomDate = () => {
@@ -62,4 +53,4 @@ const generateTasks = (count) => {
 };
 
 
-export {generateTask, generateTasks};
+export {generateTasks};

@@ -1,5 +1,5 @@
 import {COLORS, DAYS, MONTH_NAMES} from "../const.js";
-import {formatTime} from "../utils.js";
+import {createElement, formatTime} from "../utils.js";
 
 const createColorsMarkup = (colors, currentColor) => {
   return colors.map((color, index) => {
@@ -22,7 +22,7 @@ const createColorsMarkup = (colors, currentColor) => {
 };
 
 const createRepeatingDaysMarkup = () => {
-  return `(
+  return (`
     <input
       class="visually-hidden card__repeat-day-input"
       type="checkbox"
@@ -96,10 +96,10 @@ const createRepeatingDaysMarkup = () => {
     <label class="card__repeat-day" for="repeat-su-4"
       >su</label
     >
-  )`;
+  `);
 };
 
-export const createTaskEditTemplate = (task) => {
+const createTaskEditTemplate = (task) => {
   const {description, dueDate, color, repeatingDays} = task;
 
   const isExpired = dueDate instanceof Date && dueDate < Date.now();
@@ -116,8 +116,7 @@ export const createTaskEditTemplate = (task) => {
   const colorsMarkup = createColorsMarkup(COLORS, color);
   const repeatingDaysMarkup = createRepeatingDaysMarkup(DAYS, repeatingDays);
 
-  return `
-    <article class="card card--edit ${color} ${repeatClass} ${deadlineClass}">
+  return (`<article class="card card--edit ${color} ${repeatClass} ${deadlineClass}">
             <form class="card__form" method="get">
               <div class="card__inner">
                 <div class="card__color-bar">
@@ -125,24 +124,20 @@ export const createTaskEditTemplate = (task) => {
                     <use xlink:href="#wave"></use>
                   </svg>
                 </div>
-
                 <div class="card__textarea-wrap">
                   <label>
                     <textarea
                       class="card__text"
                       placeholder="Start typing your text here..."
-                      name="text"
-                    >${description}</textarea>
+                      name="text">${description}</textarea>
                   </label>
                 </div>
-
                 <div class="card__settings">
                   <div class="card__details">
                     <div class="card__dates">
                       <button class="card__date-deadline-toggle" type="button">
                         date: <span class="card__date-status">yes</span>
                       </button>
-
                       <fieldset class="card__date-deadline">
                         <label class="card__input-deadline-wrap">
                           <input
@@ -150,15 +145,12 @@ export const createTaskEditTemplate = (task) => {
                             type="text"
                             placeholder=""
                             name="date"
-                            value="${date} ${time}"
-                          />
+                            value="${date} ${time}"/>
                         </label>
                       </fieldset>
-
                       <button class="card__repeat-toggle" type="button">
                         repeat:<span class="card__repeat-status">yes</span>
                       </button>
-
                       <fieldset class="card__repeat-days">
                         <div class="card__repeat-days-inner">
                           ${repeatingDaysMarkup}
@@ -166,7 +158,6 @@ export const createTaskEditTemplate = (task) => {
                       </fieldset>
                     </div>
                   </div>
-
                   <div class="card__colors-inner">
                     <h3 class="card__colors-title">Color</h3>
                     <div class="card__colors-wrap">
@@ -174,13 +165,34 @@ export const createTaskEditTemplate = (task) => {
                     </div>
                   </div>
                 </div>
-
                 <div class="card__status-btns">
                   <button class="card__save" type="submit">save</button>
                   <button class="card__delete" type="button">delete</button>
                 </div>
               </div>
             </form>
-          </article>
-    `;
+          </article>`);
 };
+
+export default class TaskEdit {
+  constructor(task) {
+    this._task = task;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createTaskEditTemplate(this._task);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
