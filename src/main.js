@@ -11,7 +11,7 @@ import {generateFilters} from "./mock/filter.js";
 import {generateTasks} from "./mock/task.js";
 import {render, RenderPosition} from "./utils.js";
 
-const TASK_COUNT = 0;
+const TASK_COUNT = 22;
 const SHOWING_TASKS_COUNT_ON_START = 8;
 const SHOWING_TASKS_COUNT_BY_BUTTON = 8;
 
@@ -55,7 +55,7 @@ const renderBoard = (boardComponent, tasks) => {
   const isAllTasksArchieved = tasks.every((task) => task.isArchieve);
   if (isAllTasksArchieved) {
     render(boardComponent.getElement(), new NoTasksElement().getElement(), RenderPosition.BEFOREEND);
-    console.log(new NoTasksElement().getElement());
+
     return;
   }
 
