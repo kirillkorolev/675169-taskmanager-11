@@ -52,7 +52,7 @@ const renderTask = (taskListElement, task) => {
 };
 
 const renderBoard = (boardComponent, tasks) => {
-  const isAllTasksArchieved = tasks.every((task) => task.isArchieve);
+  const isAllTasksArchieved = tasks.every((task) => task.isArchive);
   if (isAllTasksArchieved) {
     render(boardComponent.getElement(), new NoTasksElement().getElement(), RenderPosition.BEFOREEND);
 
