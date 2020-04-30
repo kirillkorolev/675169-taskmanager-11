@@ -2,7 +2,7 @@ import LoadMoreButtonComponent from "../components/load-more-button.js";
 // import TaskEditComponent from "../components/task-edit.js";
 // import TaskComponent from "../components/task.js";
 import TasksComponent from "../components/tasks.js";
-import NoTasksElement from "../components/no-task.js";
+import NoTasksComponent from "../components/no-task.js";
 import SortComponent, {SortType} from "../components/sort.js";
 
 import {remove, render, RenderPosition} from "../utils/render.js";
@@ -46,13 +46,14 @@ export default class BoardController {
     this._tasks = [];
     this._showedTaskControllers = [];
     this._showingTasksCount = SHOWING_TASKS_COUNT_ON_START;
-    this._noTasksComponent = new NoTasksElement();
+    this._noTasksComponent = new NoTasksComponent();
     this._sortComponent = new SortComponent();
     this._tasksComponent = new TasksComponent();
     this._loadMoreButtonComponent = new LoadMoreButtonComponent();
 
     this._onSortTypeChange = this._onSortTypeChange.bind(this);
     this._onViewChange = this._onViewChange.bind(this);
+    this._onDataChange = this._onDataChange.bind(this);
 
     this._sortComponent.setSortTypeChangeHandler(this._onSortTypeChange);
   }
@@ -63,7 +64,7 @@ export default class BoardController {
 
     const isAllTasksArchived = this._tasks.every((task) => task.isArchive);
     if (isAllTasksArchived) {
-      render(container.getElement(), this._noTasksComponent.getElement(), RenderPosition.BEFOREEND);
+      render(container, this._noTasksComponent, RenderPosition.BEFOREEND);
       return;
     }
 
@@ -129,6 +130,6 @@ export default class BoardController {
     const newTasks = renderTasks(taskListElement, sortedTasks, this._onDataChange, this._onViewChange);
     this._showedTaskControllers = newTasks;
 
-    this.__renderLoadMoreButton();
+    this._renderLoadMoreButton();
   }
 }

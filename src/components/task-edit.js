@@ -26,83 +26,25 @@ const createColorsMarkup = (colors, currentColor) => {
   }).join(`\n`);
 };
 
-const createRepeatingDaysMarkup = () => {
-  return (`
-    <input
-      class="visually-hidden card__repeat-day-input"
-      type="checkbox"
-      id="repeat-mo-4"
-      name="repeat"
-      value="mo"
-    />
-    <label class="card__repeat-day" for="repeat-mo-4"
-      >mo</label
-    >
-    <input
-      class="visually-hidden card__repeat-day-input"
-      type="checkbox"
-      id="repeat-tu-4"
-      name="repeat"
-      value="tu"
-      checked
-    />
-    <label class="card__repeat-day" for="repeat-tu-4"
-      >tu</label
-    >
-    <input
-      class="visually-hidden card__repeat-day-input"
-      type="checkbox"
-      id="repeat-we-4"
-      name="repeat"
-      value="we"
-    />
-    <label class="card__repeat-day" for="repeat-we-4"
-      >we</label
-    >
-    <input
-      class="visually-hidden card__repeat-day-input"
-      type="checkbox"
-      id="repeat-th-4"
-      name="repeat"
-      value="th"
-    />
-    <label class="card__repeat-day" for="repeat-th-4"
-      >th</label
-    >
-    <input
-      class="visually-hidden card__repeat-day-input"
-      type="checkbox"
-      id="repeat-fr-4"
-      name="repeat"
-      value="fr"
-      checked
-    />
-    <label class="card__repeat-day" for="repeat-fr-4"
-      >fr</label
-    >
-    <input
-      class="visually-hidden card__repeat-day-input"
-      type="checkbox"
-      name="repeat"
-      value="sa"
-      id="repeat-sa-4"
-    />
-    <label class="card__repeat-day" for="repeat-sa-4"
-      >sa</label
-    >
-    <input
-      class="visually-hidden card__repeat-day-input"
-      type="checkbox"
-      id="repeat-su-4"
-      name="repeat"
-      value="su"
-      checked
-    />
-    <label class="card__repeat-day" for="repeat-su-4"
-      >su</label
-    >
-  `);
+const createRepeatingDaysMarkup = (days, repeatingDays) => {
+  return days
+    .map((day, index) => {
+      const isChecked = repeatingDays[day];
+      return (`<input
+        class="visually-hidden card__repeat-day-input"
+        type="checkbox"
+        id="repeat-${day}-${index}"
+        name="repeat"
+        value="${day}"
+        ${isChecked ? `checked` : ``}
+      />
+      <label class="card__repeat-day" for="repeat-${day}-${index}"
+        >${day}</label
+      >`);
+    })
+    .join(`\n`);
 };
+
 
 const createTaskEditTemplate = (task, options = {}) => {
   const {description, dueDate, color} = task;

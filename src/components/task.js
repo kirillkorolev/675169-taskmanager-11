@@ -38,7 +38,6 @@ export const createTaskTemplate = (task) => {
                 <div class="card__textarea-wrap">
                   <p class="card__text">${description}</p>
                 </div>
-
                 <div class="card__settings">
                   <div class="card__details">
                     <div class="card__dates">
@@ -80,9 +79,5 @@ export default class Task extends AbstractComponent {
   setArchiveButtonClickHandler(handler) {
     this.getElement().querySelector(`.card__btn--archive`)
       .addEventListener(`click`, handler);
-  }
-
-  clearContent() {
-    this.getElement().innerHTML = ``;
   }
 }
