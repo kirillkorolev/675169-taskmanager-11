@@ -1,6 +1,4 @@
 import LoadMoreButtonComponent from "../components/load-more-button.js";
-// import TaskEditComponent from "../components/task-edit.js";
-// import TaskComponent from "../components/task.js";
 import TasksComponent from "../components/tasks.js";
 import NoTasksComponent from "../components/no-task.js";
 import SortComponent, {SortType} from "../components/sort.js";
@@ -43,6 +41,7 @@ const getSortedTasks = (tasks, sortType, from, to) => {
 export default class BoardController {
   constructor(container) {
     this._container = container;
+
     this._tasks = [];
     this._showedTaskControllers = [];
     this._showingTasksCount = SHOWING_TASKS_COUNT_ON_START;

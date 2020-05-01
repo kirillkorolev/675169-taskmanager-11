@@ -84,9 +84,9 @@ const createTaskEditTemplate = (task, options = {}) => {
                   <div class="card__details">
                     <div class="card__dates">
                       <button class="card__date-deadline-toggle" type="button">
-                        date: <span class="card__date-status">yes</span>
+                        date: <span class="card__date-status">${isDateShowing ? `yes` : `no`}</span>
                       </button>
-                      <fieldset class="card__date-deadline">
+                      ${isDateShowing ? `<fieldset class="card__date-deadline">
                         <label class="card__input-deadline-wrap">
                           <input
                             class="card__date"
@@ -95,17 +95,16 @@ const createTaskEditTemplate = (task, options = {}) => {
                             name="date"
                             value="${date} ${time}"/>
                         </label>
-                      </fieldset>
+                      </fieldset>` : ``}
                       <button class="card__repeat-toggle" type="button">
-                        repeat:<span class="card__repeat-status">yes</span>
+                        repeat:<span class="card__repeat-status">${isRepeatingTask ? `yes` : `no`}</span>
                       </button>
-                      <fieldset class="card__repeat-days">
+                      ${isRepeatingTask ? `<fieldset class="card__repeat-days">
                         <div class="card__repeat-days-inner">
                           ${repeatingDaysMarkup}
                         </div>
-                      </fieldset>
+                      </fieldset>` : ``}
                     </div>
-                  </div>
                   <div class="card__colors-inner">
                     <h3 class="card__colors-title">Color</h3>
                     <div class="card__colors-wrap">
@@ -113,13 +112,14 @@ const createTaskEditTemplate = (task, options = {}) => {
                     </div>
                   </div>
                 </div>
-                <div class="card__status-btns">
-                  <button class="card__save" type="submit" ${isBlockSaveButton ? `disabled` : ``}>save</button>
-                  <button class="card__delete" type="button">delete</button>
-                </div>
               </div>
-            </form>
-          </article>`);
+              <div class="card__status-btns">
+                <button class="card__save" type="submit" ${isBlockSaveButton ? `disabled` : ``}>save</button>
+                <button class="card__delete" type="button">delete</button>
+              </div>
+            </div>
+          </form>
+        </article>`);
 };
 
 export default class TaskEdit extends AbstractSmartComponent {
@@ -131,6 +131,8 @@ export default class TaskEdit extends AbstractSmartComponent {
     this._isDateShowing = !!task.dueDate;
     this._isRepeatingTask = Object.values(task.repeatingDays).some(Boolean);
     this._activeRepeatingDays = Object.assign({}, task.repeatingDays);
+
+    this._subscribeOnEvents();
   }
 
   getTemplate() {
